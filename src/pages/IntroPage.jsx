@@ -108,7 +108,7 @@ export default function IntroPage({ onEnter }) {
 
         <div className="intro-wordmark">
           <span className="intro-word intro-word-1">PARK.</span>
-          <span className="intro-word intro-word-2">PHERE.</span>
+          <span className="intro-word intro-word-2">SPHERE.</span>
         </div>
 
         <div className="intro-tagline">
