@@ -29,6 +29,10 @@ export const api = {
   getOwnerAreas: (token) => request('/owner/parking-areas', { token }),
   createParkingArea: (token, payload) =>
     request('/parking-areas', { method: 'POST', token, body: payload }),
+  updateParkingArea: (token, areaId, payload) =>
+    request(`/parking-areas/${areaId}`, { method: 'PUT', token, body: payload }),
+  deleteParkingArea: (token, areaId) =>
+    request(`/parking-areas/${areaId}`, { method: 'DELETE', token }),
   getMyReservations: (token) => request('/reservations/me', { token }),
   createReservation: (token, payload) =>
     request('/reservations', { method: 'POST', token, body: payload }),

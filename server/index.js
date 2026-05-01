@@ -400,6 +400,98 @@ app.post('/api/parking-areas', authRequired, requireRole('owner'), async (req, r
   res.status(201).json({ area })
 })
 
+app.put('/api/parking-areas/:areaId', authRequired, requireRole('owner'), async (req, res) => {
+  const { areaId } = req.params
+  const {
+    name,
+    address,
+    city,
+    description,
+    latitude,
+    longitude,
+    carSlots,
+    bikeSlots,
+    pricePerHour,
+  } = req.body
+
+  if (!name || !address || !city || latitude === undefined || longitude === undefined) {
+    return res.status(400).json({ message: 'Name, address, city, latitude, and longitude are required.' })
+  }
+
+  const existingAreaResult = await req.db.query(
+    'SELECT * FROM parking_areas WHERE id = $1 AND owner_id = $2',
+    [areaId, req.user.id]
+  )
+
+  if (!existingAreaResult.rows[0]) {
+    return res.status(404).json({ message: 'Parking area not found for this owner.' })
+  }
+
+  const updatedArea = {
+    id: areaId,
+    ownerId: req.user.id,
+    name,
+    address,
+    city,
+    description: description || '',
+    latitude: Number(latitude),
+    longitude: Number(longitude),
+    carSlots: Number(carSlots || 0),
+    bikeSlots: Number(bikeSlots || 0),
+    pricePerHour: Number(pricePerHour || 0),
+  }
+
+  const updateResult = await req.db.query(
+    `
+      UPDATE parking_areas
+      SET
+        name = $1,
+        address = $2,
+        city = $3,
+        description = $4,
+        latitude = $5,
+        longitude = $6,
+        car_slots = $7,
+        bike_slots = $8,
+        price_per_hour = $9
+      WHERE id = $10 AND owner_id = $11
+      RETURNING *
+    `,
+    [
+      updatedArea.name,
+      updatedArea.address,
+      updatedArea.city,
+      updatedArea.description,
+      updatedArea.latitude,
+      updatedArea.longitude,
+      updatedArea.carSlots,
+      updatedArea.bikeSlots,
+      updatedArea.pricePerHour,
+      updatedArea.id,
+      updatedArea.ownerId,
+    ]
+  )
+
+  res.json({ area: mapArea(updateResult.rows[0]), message: 'Parking area updated successfully.' })
+})
+
+app.delete('/api/parking-areas/:areaId', authRequired, requireRole('owner'), async (req, res) => {
+  const { areaId } = req.params
+
+  const existingAreaResult = await req.db.query(
+    'SELECT id FROM parking_areas WHERE id = $1 AND owner_id = $2',
+    [areaId, req.user.id]
+  )
+
+  if (!existingAreaResult.rows[0]) {
+    return res.status(404).json({ message: 'Parking area not found for this owner.' })
+  }
+
+  await req.db.query('DELETE FROM parking_areas WHERE id = $1 AND owner_id = $2', [areaId, req.user.id])
+
+  res.json({ success: true, message: 'Parking area deleted successfully.' })
+})
+
 app.get('/api/reservations/me', authRequired, async (req, res) => {
   const baseQuery = `
     SELECT
