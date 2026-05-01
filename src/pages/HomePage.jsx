@@ -224,7 +224,7 @@ export default function HomePage() {
 
           <div className="park-hero-copy">
             <h1>PARK.</h1>
-            <h1>PHERE.</h1>
+            <h1>SPHERE.</h1>
           </div>
 
           <div className="park-hero-meta">
