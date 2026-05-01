@@ -2082,6 +2082,26 @@ footer span {
   gap: 1rem;
 }
 
+.owner-form-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  padding: 0.95rem 1rem;
+}
+
+.owner-form-toolbar strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--display);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
 .location-box {
   display: flex;
   flex-direction: column;
@@ -2095,6 +2115,101 @@ footer span {
   letter-spacing: 0.06em;
   color: var(--muted);
   line-height: 1.5;
+}
+
+.owner-lot-card.glass-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important;
+  border: 1px solid var(--border) !important;
+  padding: 0 !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.owner-lot-card.glass-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(232, 216, 0, 0.08), transparent 34%);
+  pointer-events: none;
+}
+
+.owner-lot-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent !important;
+  border: none !important;
+  outline: none;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+  padding: 1.35rem 1.35rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.owner-lot-select:hover {
+  background: rgba(255,255,255,0.02) !important;
+}
+
+.owner-lot-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.25rem 1.15rem;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.28);
+  position: relative;
+  z-index: 1;
+}
+
+.owner-action-button {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--border-yellow);
+  background: var(--yellow-soft) !important;
+  color: var(--yellow);
+  min-height: 40px;
+  padding: 0.7rem 0.95rem;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.owner-action-button:hover {
+  transform: translateY(-1px);
+  background: rgba(232, 216, 0, 0.16) !important;
+  color: var(--white);
+  border-color: var(--yellow);
+}
+
+.owner-action-button svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.owner-action-danger {
+  margin-left: auto;
+  border-color: rgba(255, 118, 118, 0.35);
+  background: rgba(255, 94, 94, 0.08) !important;
+  color: #ff9494;
+}
+
+.owner-action-danger:hover {
+  background: rgba(255, 70, 70, 0.15) !important;
+  color: #ffd0d0;
+  border-color: rgba(255, 150, 150, 0.55);
 }
 
 /* ─── MAP STYLES ─── */
